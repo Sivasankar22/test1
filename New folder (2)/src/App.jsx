@@ -1,23 +1,22 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Sidebar from './components/Sidebar';
+import UserMenu from './components/UserMenu';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import TrafficDashboard from './modules/TrafficDashboard';
 import PowerDashboard from './modules/PowerDashboard';
-// ... import other modules
+import PollutionDashboard from './modules/PollutionDashboard';
+import SafetyDashboard from './modules/SafetyDashboard';
+import AdminDashboard from './modules/AdminDashboard';
 
 function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home}/>
-        <Route path="/login" component={Login}/>
-        <Route path="/signup" component={Signup}/>
-        <Route path="/traffic" component={TrafficDashboard}/>
-        <Route path="/power" component={PowerDashboard}/>
-        {/* Add other module routes */}
-      </Switch>
-    </Router>
+  const [isAuthenticated, setIsAuthenticated] = React.useState(
+    !!localStorage.getItem('token')
   );
-}
-export default App;
+
+  // Listen for storage changes to update auth state
+  React.useEffect(() => {
+    const handleStorageChange = () => {
+      setIsAuthenticated(!!localStorage.
